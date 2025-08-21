@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multilingualism in Higher Education | Critical Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0ff;
+            --secondary: #f0f;
+            --accent: #9d4edd;
+            --dark: #0a0a14;
+            --darker: #050508;
+            --light: #f0f0f0;
+            --card-bg: rgba(20, 20, 30, 0.7);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(157, 78, 221, 0.03) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0 15px;
+            position: relative;
+            background: linear-gradient(to right, rgba(0, 255, 255, 0.1), transparent);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            margin-bottom: 22.5px;
+            border-radius: 0 0 15px 15px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 7.5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2.25px;
+            text-shadow: 0 0 11.25px rgba(0, 255, 255, 0.5);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 10%;
+            width: 80%;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            border-radius: 50%;
+        }
+
+        .subtitle {
+            font-size: 0.825rem;
+            color: #aaa;
+            max-width: 800px;
+            margin: 11.25px auto 15px;
+            line-height: 1.6;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 11.25px;
+            padding: 15px;
+            max-width: 600px;
+            margin: 22.5px auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 22.5px rgba(0, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 7.5px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .contact-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .contact-card h2 {
+            color: var(--primary);
+            margin-bottom: 11.25px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 11.25px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .contact-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.825rem;
+            transition: all 0.3s ease;
+            word-break: break-all;
+            display: inline-block;
+            padding: 3.75px 7.5px;
+            border-radius: 3.75px;
+        }
+
+        .contact-card a:hover {
+            color: var(--secondary);
+            text-shadow: 0 0 11.25px rgba(255, 0, 255, 0.7);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .articles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 11.25px;
+            padding: 18.75px;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-7.5px);
+            box-shadow: 0 11.25px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 255, 255, 0.4);
+        }
+
+        .article-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .article-card h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 11.25px;
+            line-height: 1.4;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .article-card h3 i {
+            font-size: 1.3rem;
+        }
+
+        .article-content {
+            color: #ddd;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .article-content p {
+            margin-bottom: 12px;
+        }
+
+        .citation {
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--primary);
+            padding: 3.75px 9px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 9px 0;
+        }
+
+        .meta-tag {
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--primary);
+            padding: 3.75px 9px;
+            border-radius: 15px;
+            font-size: 0.6375rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .new-tag {
+            background: rgba(157, 78, 221, 0.2);
+            color: var(--accent);
+            border-color: rgba(157, 78, 221, 0.3);
+        }
+
+        .article-link {
+            display: inline-block;
+            color: var(--light);
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.2), rgba(157, 78, 221, 0.2));
+            padding: 7.5px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            text-align: center;
+            width: 100%;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.75px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .article-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .article-link:hover {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: var(--darker);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2.25px);
+        }
+
+        .article-link:hover::before {
+            left: 100%;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 0 15px;
+            color: #777;
+            font-size: 0.675rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+            margin-top: 22.5px;
+        }
+
+        .footer p {
+            margin: 6px 0;
+        }
+
+        .university-logo {
+            width: 120px;
+            margin: 11.25px auto;
+            filter: brightness(0.8);
+            opacity: 0.7;
+        }
+
+        .footer-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .footer-link:hover {
+            color: var(--secondary);
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 0, 255, 0.3);
+        }
+
+        @media (max-width: 1100px) {
+            .articles-container {
+                grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .articles-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.1rem;
+            }
+            
+            .subtitle {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.65rem;
+            }
+            
+            .contact-card a {
+                font-size: 0.75rem;
+            }
+            
+            .article-card {
+                padding: 15px 11.25px;
+            }
+            
+            .article-card h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-lines"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Multilingualism in Higher Education</h1>
+            <p class="subtitle">A critical realist perspective on the challenges and fallacies of multilingualism in South African universities</p>
+            
+            <div class="contact-card">
+                <h2><i class="fas fa-language"></i> Key Finding</h2>
+                <p style="color: #ccc; font-size: 0.8rem; margin-top: 10px;">"Multilingualism in South African universities remains a fallacy due to systemic barriers, despite policies designed to promote African Indigenous Languages."</p>
+            </div>
+        </header>
+
+        <div class="articles-container">
+            <!-- Section 1 -->
+            <div class="article-card">
+                <h3><i class="fas fa-exclamation-triangle"></i> The Fallacy of Multilingualism</h3>
+                <div class="article-content">
+                    <p>This paper explores the empirical, real, and actual trajectories in South African universities regarding multilingualism and decolonisation. It employs the critical realist approach to uncover these trajectories through reviewed literature.</p>
+                    <p>It investigates whether policy is followed in implementing African indigenous languages (AILs) against the hegemony of English and Afrikaans in South African universities. The paper found that multilingualism is still an area that requires attention, even though ample legislation and policies were drafted to necessitate decolonised practices that foster it.</p>
+                    <span class="citation">Emsley & Modiba, 2024</span>
+                </div>
+                <div class="article-meta">
+                    <span class="meta-tag">Critical Analysis</span>
+                    <span class="meta-tag new-tag">Research</span>
+                </div>
+            </div>
+            
+            <!-- Section 2 -->
+            <div class="article-card">
+                <h3><i class="fas fa-balance-scale"></i> Critical Realist Framework</h3>
+                <div class="article-content">
+                    <p>The study uses Bhaskar's critical realism framework which conceptualizes social reality as having three domains: the real, the actual, and the empirical.</p>
+                    <p>The real domain comprises social structures and generating mechanisms that assign power and resources. These create events in the actual domain, which may be observed in the empirical domain.</p>
+                    <p>This framework helps uncover the incongruities in implementing AILs in South African universities and argues that the use of multilingualism in HE is a misconception.</p>
+                    <span class="citation">Based on Bhaskar's critical realism</span>
+                </div>
+                <div class="article-meta">
+                    <span class="meta-tag">Methodology</span>
+                    <span class="meta-tag">Framework</span>
+                </div>
+            </div>
+            
+            <!-- Section 3 -->
+            <div class="article-card">
+                <h3><i class="fas fa-chart-line"></i> Policy vs. Implementation Gap</h3>
+                <div class="article-content">
+                    <p>Language Policy in HE (LPHE) provides a framework that advances and supports the use of indigenous languages (ILs) in teaching and learning. It stipulates guidelines for developing, implementing and for monitoring policies that transform institutions.</p>
+                    <p>However, universities fail to create multilingual environments. Reports show limitations in implementation include lack of incentives, lack of clear directives, lack of mechanisms that enforce implementation, and lack of alignment between language policy and curriculum.</p>
+                    <span class="citation">DHET, 2020</span>
+                </div>
+                <div class="article-meta">
+                    <span class="meta-tag">Policy Analysis</span>
+                    <span class="meta-tag">Implementation</span>
+                </div>
+            </div>
+            
+            <!-- Section 4 -->
+            <div class="article-card">
+                <h3><i class="fas fa-graduation-cap"></i> Basic-Higher Education Disconnect</h3>
+                <div class="article-content">
+                    <p>There is a significant disconnect between basic education and higher education systems in South Africa. Instead of continuously using Eurocentric languages as the language of instruction, which results in high failure rates, multilingual strategies must be centered on high-quality mother-tongue education.</p>
+                    <p>The 2021 Progress in International Reading Literacy Study reported that 81% of Grade 4 learners in SA cannot read for meaning in any language, with African language schools recording a decline in reading, while English and Afrikaans schools did not.</p>
+                    <span class="citation">International Reading Study, 2021</span>
+                </div>
+                <div class="article-meta">
+                    <span class="meta-tag">Education System</span>
+                    <span class="meta-tag">Literacy</span>
+                </div>
+            </div>
+            
+            <!-- Section 5 -->
+            <div class="article-card">
+                <h3><i class="fas fa-laptop-code"></i> Digitalization Challenges</h3>
+                <div class="article-content">
+                    <p>Digitalization does not per se bring about diversification in terms of communicative practices. The hegemony of English prevails also in the digital realm, and power structures of the analogue world are mirrored online.</p>
+                    <p>The main barrier in the digital development of African languages has been the comparatively meagre availability of digital text corpora that enable algorithms to build useful tools and resources for education.</p>
+                    <p>Speakers of AILs have been disproportionally disadvantaged through the monolingual bias ingrained in voice recognition and mobile learning technologies.</p>
+                    <span class="citation">Roux, 2020; Makalela, 2021</span>
+                </div>
+                <div class="article-meta">
+                    <span class="meta-tag">Technology</span>
+                    <span class="meta-tag new-tag">Digital Divide</span>
+                </div>
+            </div>
+            
+            <!-- Section 6 -->
+            <div class="article-card">
+                <h3><i class="fas fa-lightbulb"></i> Intellectualization of African Languages</h3>
+                <div class="article-content">
+                    <p>Intellectualization involves implementing policy, publishing and researching glossaries, and developing terminology in and of African languages, as well as using information and communication technologies to do so.</p>
+                    <p>While intellectualization seems to implicitly suggest an epistemic deficiency of African languages, it is precisely not about catching up in linguistic complexity but about addressing the material gap concerning African languages caused by years of neglect and lack of both corpus and status planning.</p>
+                    <p>Only African epistemic legitimacy would propel African ideas, and effective education can only take place in the language that the learner is most familiar with.</p>
+                    <span class="citation">Kaschula & Maseko, 2017</span>
+                </div>
+                <div class="article-meta">
+                    <span class="meta-tag">Language Development</span>
+                    <span class="meta-tag">Epistemology</span>
+                </div>
+                <a href="https://doi.org/10.70875/v813article12" class="article-link">Access Full Article</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="university-logo">
+                <svg viewBox="0 0 100 30" fill="#9d4edd">
+                    <path d="M10,15 Q20,5 30,15 T50,15 T70,15 T90,15" stroke="#0ff" stroke-width="2" fill="none"/>
+                    <circle cx="50" cy="15" r="5" fill="#0ff"/>
+                    <text x="50" y="25" text-anchor="middle" fill="#aaa" font-size="8">LANGUAGE RESEARCH</text>
+                </svg>
+            </div>
+            <p>© 2024 Multilingualism Research Portal</p>
+            <p>Based on: "Multilingualism in South African universities is a fallacy: a critical realist perspective"</p>
+            <a href="https://doi.org/10.70875/v813article12" class="footer-link" target="_blank">Original Article DOI: 10.70875/v813article12</a>
+        </div>
+    </div>
+
+    <script>
+        // Add subtle animation to article cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.article-card');
+            
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+            
+            // Add pulse animation to contact card
+            const contactCard = document.querySelector('.contact-card');
+            setInterval(() => {
+                contactCard.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.3)';
+                setTimeout(() => {
+                    contactCard.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0.1)';
+                }, 1000);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
