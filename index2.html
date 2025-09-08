@@ -21,6 +21,9 @@
             --darker: #050508;
             --light: #f0f0f0;
             --card-bg: rgba(20, 20, 30, 0.7);
+            /* Define header heights for scroll margins and top spacing */
+            --top-header-height: 160px; /* Approximate height of fixed header on large screens */
+            --top-header-height-sm: 140px; /* Approximate height of fixed header on small screens */
         }
 
         body {
@@ -32,6 +35,18 @@
             overflow-x: hidden;
             font-family: 'Exo 2', sans-serif;
             line-height: 1.6;
+        }
+
+        /* Reduce body padding on small screens */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
         }
 
         body::before {
@@ -64,19 +79,33 @@
         }
 
         .container {
+            /* Adjust top margin to account for fixed header */
+            margin: var(--top-header-height) auto 0;
             max-width: 1400px;
-            margin: 0 auto;
             position: relative;
         }
 
+        /* Adjust container top margin for smaller screens */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: var(--top-header-height-sm);
+            }
+        }
+
+        /* Make header fixed */
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             text-align: center;
-            padding: 30px 0 15px;
-            position: relative;
+            padding: 20px 0 10px;
             background: linear-gradient(to right, rgba(0, 255, 255, 0.1), transparent);
             border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-            margin-bottom: 22.5px;
-            border-radius: 0 0 15px 15px;
+            border-radius: 0;
+            margin: 0;
+            z-index: 1000; /* Ensure it's above other content */
+            backdrop-filter: blur(10px); /* Add blur for visual consistency */
         }
 
         h1 {
@@ -93,6 +122,8 @@
             font-weight: 700;
             position: relative;
             display: inline-block;
+            /* Prevent title overflow on small screens */
+            max-width: 90%;
         }
 
         h1::after {
@@ -112,6 +143,15 @@
             max-width: 800px;
             margin: 11.25px auto 15px;
             line-height: 1.6;
+            /* Add padding to prevent touching edges on small screens */
+            padding: 0 10px;
+        }
+
+        /* Adjust subtitle padding for very small screens */
+        @media (max-width: 600px) {
+            .subtitle {
+                padding: 0 5px;
+            }
         }
 
         .contact-card {
@@ -126,6 +166,15 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            /* Add scroll margin to ensure it clears the fixed header when scrolled to */
+            scroll-margin-top: var(--top-header-height);
+        }
+
+        /* Adjust scroll margin for smaller screens */
+        @media (max-width: 768px) {
+            .contact-card {
+                scroll-margin-top: var(--top-header-height-sm);
+            }
         }
 
         .contact-card::before {
@@ -196,6 +245,15 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            /* Add scroll margin to ensure it clears the fixed header when scrolled to */
+            scroll-margin-top: var(--top-header-height);
+        }
+
+        /* Adjust scroll margin for smaller screens */
+        @media (max-width: 768px) {
+            .article-card {
+                scroll-margin-top: var(--top-header-height-sm);
+            }
         }
 
         .article-card::before {
@@ -388,6 +446,23 @@
             }
         }
 
+        @media (max-width: 768px) {
+            /* Adjust image container max height for smaller screens */
+            .image-container img {
+                max-height: 250px;
+            }
+
+            /* Adjust sidebar elements for smaller screens */
+            .sidebar-link, .nav-button-tab {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+            .triangle {
+                width: 12px;
+                height: 12px;
+            }
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.65rem;
@@ -404,6 +479,21 @@
             .article-card h3 {
                 font-size: 1rem;
             }
+
+            /* Adjust image container max height for very small screens */
+             .image-container img {
+                max-height: 200px;
+            }
+
+            /* Adjust sidebar elements for very small screens */
+            .sidebar-link, .nav-button-tab {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+            .triangle {
+                width: 10px;
+                height: 10px;
+            }
         }
     </style>
 </head>
@@ -415,7 +505,7 @@
             <h1>Multilingualism in Higher Education</h1>
             <p class="subtitle">A critical perspective on the challenges and opportunities of multilingualism in African universities</p>
             
-            <div class="contact-card">
+            <div class="contact-card" id="key-finding">
                 <h2><i class="fas fa-language"></i> Key Finding</h2>
                 <p style="color: #ccc; font-size: 0.8rem; margin-top: 10px;">"Multilingual education in African universities requires addressing systemic barriers while leveraging translanguaging, linguistic rights, and digital technologies for meaningful transformation."</p>
             </div>
@@ -423,7 +513,7 @@
 
         <div class="articles-container">
             <!-- Focus Area 1 -->
-            <div class="article-card">
+            <div class="article-card" id="translanguaging">
                 <h3><i class="fas fa-exchange-alt"></i> Translanguaging Practices</h3>
                 <div class="article-content">
                     <p>Translanguaging refers to the pedagogical practice that leverages students' full linguistic repertoires to enhance learning. In African contexts, this means strategically using multiple languages within the classroom to facilitate comprehension and knowledge construction.</p>
@@ -437,7 +527,7 @@
             </div>
             
             <!-- Focus Area 2 -->
-            <div class="article-card">
+            <div class="article-card" id="transformation-tools">
                 <h3><i class="fas fa-tools"></i> African Languages as Transformation Tools</h3>
                 <div class="article-content">
                     <p>African indigenous languages serve as powerful tools for educational transformation and decolonization. When integrated into higher education, these languages can challenge the hegemony of colonial languages and make education more accessible to diverse student populations.</p>
@@ -451,7 +541,7 @@
             </div>
             
             <!-- Focus Area 3 -->
-            <div class="article-card">
+            <div class="article-card" id="linguistic-rights">
                 <h3><i class="fas fa-microphone"></i> Linguistic Rights and Social Justice</h3>
                 <div class="article-content">
                     <p>Linguistic rights encompass the right to use one's native language in educational, administrative, and public contexts. In African higher education, recognizing these rights is fundamental to social justice and equitable participation.</p>
@@ -465,7 +555,7 @@
             </div>
             
             <!-- Focus Area 4 -->
-            <div class="article-card">
+            <div class="article-card" id="digitalization">
                 <h3><i class="fas fa-laptop-code"></i> Digitalization of African Languages</h3>
                 <div class="article-content">
                     <p>The digitalization of African languages is crucial for their relevance in modern education systems. This includes developing language technologies, digital corpora, and educational resources in indigenous languages.</p>
@@ -479,7 +569,7 @@
             </div>
             
             <!-- Focus Area 5 -->
-            <div class="article-card">
+            <div class="article-card" id="intellectualization">
                 <h3><i class="fas fa-lightbulb"></i> Intellectualization of African Languages</h3>
                 <div class="article-content">
                     <p>Intellectualization involves developing the capacity of African languages to handle complex academic and scientific concepts. This process includes terminology development, creating academic literature, and establishing standards for academic writing in these languages.</p>
@@ -522,8 +612,24 @@
     </div>
 
     <script>
-        // Add subtle animation to article cards on page load
+        // Add smooth scrolling for anchor links
         document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start' // Aligns the top of the element with the top of the viewport (adjusted by scroll-margin-top)
+                        });
+                    }
+                });
+            });
+
+            // Add subtle animation to article cards on page load
             const cards = document.querySelectorAll('.article-card');
             
             cards.forEach((card, index) => {
